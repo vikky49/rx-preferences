@@ -11,7 +11,17 @@ public final class Random {
     return RANDOM.nextInt();
   }
 
+  static int nextInt(int n) {
+    return RANDOM.nextInt(n);
+  }
+
   static boolean nextBoolean() {
     return RANDOM.nextBoolean();
+  }
+
+  static String nextString() {
+    byte[] bytes = new byte[nextInt(10)];
+    RANDOM.nextBytes(bytes);
+    return new String(bytes);
   }
 }
