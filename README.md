@@ -7,8 +7,41 @@ Reactive SharedPreferences for Android
 Usage
 -----
 
-TODO: Fill this in. I don't usually know the API for my projects before I start so this isn't templated just yet.
+To observe all changes to SharedPreferences directly.
 
+```java
+SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+SharedPreferencesObservable.observe(sharedPreferences) //
+              ...
+              .subscribe(new EndlessObserver<String>() {
+                @Override public void onNext(String key) {
+                  subscriber.onNext(key);
+                }
+              })
+
+```
+
+You'll most likely want to use the typed preferences instead. Currently `boolean`, `string`, `int`
+and `float` types are included.
+
+```java
+SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+BooleanPreference booleanPreference = new BooleanPreference(sharedPreferences, "foo");
+booleanPreference.asObservable().subscribe(new Observer<BooleanPreference>() {
+      @Override public void onCompleted() {
+
+      }
+
+      @Override public void onError(Throwable e) {
+
+      }
+
+      @Override public void onNext(BooleanPreference booleanPreference) {
+          booleanPreference.isSet();
+          booleanPreference.get();
+      }
+    });
+```
 
 Download
 --------
